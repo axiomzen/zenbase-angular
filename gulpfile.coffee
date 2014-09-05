@@ -4,6 +4,7 @@ stylus     = require 'gulp-stylus'
 coffee     = require 'gulp-coffee'
 gutil      = require 'gulp-util'
 rimraf     = require 'rimraf'
+webserver  = require 'gulp-webserver'
 
 ###
 # Compilation Tasks
@@ -29,3 +30,14 @@ gulp.task 'removePublic', (cb) ->
   rimraf './public/', cb
 
 gulp.task 'compile', ['jade', 'stylus', 'coffee']
+
+
+###
+# Web server
+###
+
+gulp.task 'webserver', ->
+  gulp.src 'public'
+    .pipe webserver
+      livereload: true
+      open: true
