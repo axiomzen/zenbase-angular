@@ -27,3 +27,5 @@ gulp.task 'coffee', ->
 
 gulp.task 'removePublic', (cb) ->
   rimraf './public/', cb
+
+gulp.task 'compile', ['jade', 'stylus', 'coffee']
