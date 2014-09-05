@@ -5,6 +5,7 @@ coffee     = require 'gulp-coffee'
 gutil      = require 'gulp-util'
 rimraf     = require 'rimraf'
 watch      = require 'gulp-watch'
+webserver  = require 'gulp-webserver'
 
 paths =
   jade: 'src/**/*.jade'
@@ -53,3 +54,14 @@ gulp.task 'watch', ->
   watchPath paths.coffee, translateCoffee
 
 gulp.task 'compile', ['jade', 'stylus', 'coffee']
+
+
+###
+# Web server
+###
+
+gulp.task 'webserver', ->
+  gulp.src 'public'
+    .pipe webserver
+      livereload: true
+      open: true
