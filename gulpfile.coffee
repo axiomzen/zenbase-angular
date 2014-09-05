@@ -1,6 +1,7 @@
 gulp       = require 'gulp'
 jade       = require 'gulp-jade'
 coffee     = require 'gulp-coffee'
+gutil      = require 'gulp-util'
 
 gulp.task 'jade', ->
   gulp.src ['src/index.jade', 'src/**/*.jade']
@@ -9,5 +10,5 @@ gulp.task 'jade', ->
 
 gulp.task 'coffee', ->
   gulp.src ['src/coffee/**/*.coffee']
-    .pipe coffee()
+    .pipe coffee().on('error', gutil.log)
     .pipe gulp.dest './public/js/'
