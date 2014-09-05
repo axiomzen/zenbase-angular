@@ -4,28 +4,52 @@ stylus     = require 'gulp-stylus'
 coffee     = require 'gulp-coffee'
 gutil      = require 'gulp-util'
 rimraf     = require 'rimraf'
+watch      = require 'gulp-watch'
+
+paths =
+  jade: 'src/**/*.jade'
+  stylus: 'src/styles/*.styl'
+  coffee: 'src/coffee/**/*.coffee'
 
 ###
 # Compilation Tasks
 ###
 
-gulp.task 'jade', ->
-  gulp.src ['src/index.jade', 'src/**/*.jade']
+translateJade = (files) ->
+  files
     .pipe jade pretty: true
     .pipe gulp.dest './public/'
 
-# Get and render all .styl files in src/styles/ folder
-gulp.task 'stylus', ->
-  gulp.src 'src/styles/*.styl'
+translateStylus = (files) ->
+  files
     .pipe stylus()
     .pipe gulp.dest './public/css/'
 
-gulp.task 'coffee', ->
-  gulp.src ['src/coffee/**/*.coffee']
+translateCoffee = (files) ->
+  files
     .pipe coffee().on('error', gutil.log)
     .pipe gulp.dest './public/js/'
 
+watchPath = (path, action) ->
+  watch path, (files) ->
+    action files
+
+gulp.task 'jade', ->
+  translateJade gulp.src paths.jade
+
+# Get and render all .styl files in src/styles/ folder
+gulp.task 'stylus', ->
+  translateStylus gulp.src paths.stylus
+
+gulp.task 'coffee', ->
+  translateCoffee gulp.src paths.coffee
+
 gulp.task 'removePublic', (cb) ->
   rimraf './public/', cb
+
+gulp.task 'watch', ->
+  watchPath paths.jade, translateJade
+  watchPath paths.stylus, translateStylus
+  watchPath paths.coffee, translateCoffee
 
 gulp.task 'compile', ['jade', 'stylus', 'coffee']
