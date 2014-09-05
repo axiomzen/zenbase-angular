@@ -1,0 +1,2 @@
+hello = ->
+  console.log 'world'

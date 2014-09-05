@@ -2,7 +2,12 @@
   "devDependencies": {
     "coffee-script": "^1.8.0",
     "gulp": "^3.8.7",
+<<<<<<< HEAD
     "gulp-jade": "^0.7.0",
     "gulp-stylus": "^1.3.0"
+=======
+    "gulp-coffee": "^2.2.0",
+    "gulp-jade": "^0.7.0"
+>>>>>>> 830321d2172234dbf7f70b683ffbbd44758f1eb8
   }
 }
