@@ -3,6 +3,11 @@ jade       = require 'gulp-jade'
 stylus     = require 'gulp-stylus'
 coffee     = require 'gulp-coffee'
 gutil      = require 'gulp-util'
+rimraf     = require 'rimraf'
+
+###
+# Compilation Tasks
+###
 
 gulp.task 'jade', ->
   gulp.src ['src/index.jade', 'src/**/*.jade']
@@ -19,3 +24,6 @@ gulp.task 'coffee', ->
   gulp.src ['src/coffee/**/*.coffee']
     .pipe coffee().on('error', gutil.log)
     .pipe gulp.dest './public/js/'
+
+gulp.task 'removePublic', (cb) ->
+  rimraf './public/', cb
