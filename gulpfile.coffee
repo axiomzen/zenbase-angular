@@ -11,57 +11,66 @@ paths =
   jade: 'src/**/*.jade'
   stylus: 'src/styles/*.styl'
   coffee: 'src/coffee/**/*.coffee'
+  public: './public'
 
 ###
 # Compilation Tasks
 ###
 
-translateJade = (files) ->
+compileJade = (files) ->
   files
     .pipe jade pretty: true
-    .pipe gulp.dest './public/'
+    .pipe gulp.dest paths.public
 
-translateStylus = (files) ->
+compileStylus = (files) ->
   files
     .pipe stylus()
-    .pipe gulp.dest './public/css/'
+    .pipe gulp.dest "#{paths.public}/css/"
 
-translateCoffee = (files) ->
+compileCoffee = (files) ->
   files
     .pipe coffee().on('error', gutil.log)
-    .pipe gulp.dest './public/js/'
+    .pipe gulp.dest "#{paths.public}/js/"
 
 watchPath = (path, action) ->
   watch path, (files) ->
     action files
 
-gulp.task 'jade', ->
-  translateJade gulp.src paths.jade
-
-# Get and render all .styl files in src/styles/ folder
-gulp.task 'stylus', ->
-  translateStylus gulp.src paths.stylus
-
-gulp.task 'coffee', ->
-  translateCoffee gulp.src paths.coffee
-
+# Remove ./public folder
 gulp.task 'removePublic', (cb) ->
-  rimraf './public/', cb
+  rimraf paths.public, cb
 
-gulp.task 'watch', ->
-  watchPath paths.jade, translateJade
-  watchPath paths.stylus, translateStylus
-  watchPath paths.coffee, translateCoffee
+# Get and compile all .coffee files in src/coffee/ folder
+gulp.task 'coffee', ['removePublic'], ->
+  compileCoffee gulp.src paths.coffee
 
-gulp.task 'compile', ['jade', 'stylus', 'coffee']
+# Get and compile all .jade files in src/ folder
+gulp.task 'jade', ['removePublic'], ->
+  compileJade gulp.src paths.jade
 
+# Get and compile all .styl files in src/styles/ folder
+gulp.task 'stylus', ['removePublic'], ->
+  compileStylus gulp.src paths.stylus
+
+# Compile all .jade, .stylus, .coffee files
+gulp.task 'compile', ['removePublic', 'jade', 'stylus', 'coffee']
 
 ###
 # Web server
 ###
 
-gulp.task 'webserver', ->
+# Watch changes on .jade, .stylus and .coffee files
+gulp.task 'watch', ['compile'], ->
+  watchPath paths.jade, compileJade
+  watchPath paths.stylus, compileStylus
+  watchPath paths.coffee, compileCoffee
+
+# Starts a local web server
+gulp.task 'webserver', ['compile'], ->
   gulp.src 'public'
     .pipe webserver
       livereload: true
       open: true
+
+# Default task
+gulp.task 'default', ['compile', 'webserver', 'watch']
