@@ -6,6 +6,7 @@ rimraf     = require 'rimraf'
 watch      = require 'gulp-watch'
 webserver  = require 'gulp-webserver'
 plumber    = require 'gulp-plumber'
+notify     = require 'gulp-notify'
 
 paths =
   jade: 'src/**/*.jade'
@@ -20,19 +21,19 @@ paths =
 
 compileJade = (files) ->
   files
-    .pipe plumber()
+    .pipe plumber errorHandler: notify.onError("Jade error: <%= error.message %>")
     .pipe jade pretty: true
     .pipe gulp.dest paths.public
 
 compileStylus = (files) ->
   files
-    .pipe plumber()
+    .pipe plumber errorHandler: notify.onError("Stylus error: <%= error.message %>")
     .pipe stylus()
     .pipe gulp.dest "#{paths.public}/css/"
 
 compileCoffee = (files) ->
   files
-    .pipe plumber()
+    .pipe plumber errorHandler: notify.onError("Coffee error: <%= error.message %>")
     .pipe coffee()
     .pipe gulp.dest "#{paths.public}/js/"
 
