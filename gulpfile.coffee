@@ -2,7 +2,7 @@ gulp       = require 'gulp'
 jade       = require 'gulp-jade'
 stylus     = require 'gulp-stylus'
 coffee     = require 'gulp-coffee'
-rimraf     = require 'rimraf'
+rimraf     = require 'gulp-rimraf'
 watch      = require 'gulp-watch'
 webserver  = require 'gulp-webserver'
 plumber    = require 'gulp-plumber'
@@ -37,9 +37,10 @@ compileCoffee = (files) ->
     .pipe coffee()
     .pipe gulp.dest "#{paths.public}/js/"
 
-# Remove ./public folder
-gulp.task 'removePublic', (cb) ->
-  rimraf paths.public, cb
+# Remove ./public folder (except for bower_components)
+gulp.task 'removePublic', ->
+  gulp.src ["#{paths.public}/*", "!#{paths.public}/bower_components"], read: false
+    .pipe rimraf()
 
 # Get and compile all .coffee files in src/coffee/ folder
 gulp.task 'coffee', ['removePublic'], ->
