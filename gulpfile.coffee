@@ -1,12 +1,5 @@
-gulp       = require 'gulp'
-jade       = require 'gulp-jade'
-stylus     = require 'gulp-stylus'
-coffee     = require 'gulp-coffee'
-rimraf     = require 'gulp-rimraf'
-watch      = require 'gulp-watch'
-webserver  = require 'gulp-webserver'
-plumber    = require 'gulp-plumber'
-notify     = require 'gulp-notify'
+gulp = require 'gulp'
+plgn = require('gulp-load-plugins')()
 
 paths =
   jade: 'src/**/*.jade'
@@ -21,26 +14,29 @@ paths =
 
 compileJade = (files) ->
   files
-    .pipe plumber errorHandler: notify.onError("Jade error: <%= error.message %>")
-    .pipe jade pretty: true
+    .pipe plgn.plumber
+      errorHandler: plgn.notify.onError "Jade error: <%= error.message %>"
+    .pipe plgn.jade pretty: true
     .pipe gulp.dest paths.public
 
 compileStylus = (files) ->
   files
-    .pipe plumber errorHandler: notify.onError("Stylus error: <%= error.message %>")
-    .pipe stylus()
+    .pipe plgn.plumber
+      errorHandler: plgn.notify.onError "Stylus error: <%= error.message %>"
+    .pipe plgn.stylus()
     .pipe gulp.dest "#{paths.public}/css/"
 
 compileCoffee = (files) ->
   files
-    .pipe plumber errorHandler: notify.onError("Coffee error: <%= error.message %>")
-    .pipe coffee()
+    .pipe plgn.plumber
+      errorHandler: plgn.notify.onError "Coffee error: <%= error.message %>"
+    .pipe plgn.coffee()
     .pipe gulp.dest "#{paths.public}/js/"
 
 # Remove ./public folder (except for bower_components)
 gulp.task 'removePublic', ->
   gulp.src ["#{paths.public}/*", "!#{paths.public}/bower_components"], read: false
-    .pipe rimraf()
+    .pipe plgn.rimraf()
 
 # Get and compile all .coffee files in src/coffee/ folder
 gulp.task 'coffee', ['removePublic'], ->
@@ -63,7 +59,7 @@ gulp.task 'compile', ['removePublic', 'jade', 'stylus', 'coffee']
 ###
 
 watchPath = (path, action) ->
-  watch path, (files) ->
+  plgn.watch path, (files) ->
     action files
 
 # Watch changes on .jade, .stylus and .coffee files
@@ -75,7 +71,7 @@ gulp.task 'watch', ['compile'], ->
 # Starts a local web server
 gulp.task 'webserver', ['compile'], ->
   gulp.src 'public'
-    .pipe webserver
+    .pipe plgn.webserver
       livereload: true
       open: true
 
