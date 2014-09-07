@@ -15,6 +15,7 @@ paths =
 
 ###
 # Compilation Tasks
+# Compiling Coffee/Jade/Stylus from src/ into public/
 ###
 
 compileJade = (files) ->
@@ -31,10 +32,6 @@ compileCoffee = (files) ->
   files
     .pipe coffee().on('error', gutil.log)
     .pipe gulp.dest "#{paths.public}/js/"
-
-watchPath = (path, action) ->
-  watch path, (files) ->
-    action files
 
 # Remove ./public folder
 gulp.task 'removePublic', (cb) ->
@@ -57,7 +54,12 @@ gulp.task 'compile', ['removePublic', 'jade', 'stylus', 'coffee']
 
 ###
 # Web server
+# For local development
 ###
+
+watchPath = (path, action) ->
+  watch path, (files) ->
+    action files
 
 # Watch changes on .jade, .stylus and .coffee files
 gulp.task 'watch', ['compile'], ->
