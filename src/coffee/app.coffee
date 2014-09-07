@@ -1,2 +1,1 @@
-hello = ->
-  console.log 'world'
+angular.module 'app', [], ->
