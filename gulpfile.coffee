@@ -2,10 +2,10 @@ gulp       = require 'gulp'
 jade       = require 'gulp-jade'
 stylus     = require 'gulp-stylus'
 coffee     = require 'gulp-coffee'
-gutil      = require 'gulp-util'
 rimraf     = require 'rimraf'
 watch      = require 'gulp-watch'
 webserver  = require 'gulp-webserver'
+plumber    = require 'gulp-plumber'
 
 paths =
   jade: 'src/**/*.jade'
@@ -20,17 +20,20 @@ paths =
 
 compileJade = (files) ->
   files
+    .pipe plumber()
     .pipe jade pretty: true
     .pipe gulp.dest paths.public
 
 compileStylus = (files) ->
   files
+    .pipe plumber()
     .pipe stylus()
     .pipe gulp.dest "#{paths.public}/css/"
 
 compileCoffee = (files) ->
   files
-    .pipe coffee().on('error', gutil.log)
+    .pipe plumber()
+    .pipe coffee()
     .pipe gulp.dest "#{paths.public}/js/"
 
 # Remove ./public folder
