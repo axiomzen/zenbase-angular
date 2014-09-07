@@ -4,8 +4,8 @@ html
   head
     title Title
   body(ng-app='app')
-    input(ng-model='hello')
-    p {{hello}}
+    div(ng-controller="hello as h")
+      p(ng-click="h.data()") Hello
 
 
     script(src='bower_components/angular/angular.js')
