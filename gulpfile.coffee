@@ -2,8 +2,9 @@ gulp = require 'gulp'
 plgn = require('gulp-load-plugins')()
 
 paths =
-  jade: 'src/**/*.jade'
-  stylus: 'src/styles/*.styl'
+  index: 'src/index.jade'
+  jade: 'src/views/**/*.jade'
+  stylus: 'src/styles/**/*.styl'
   coffee: 'src/coffee/**/*.coffee'
   public: './public'
 
@@ -17,7 +18,7 @@ compileJade = (files) ->
     .pipe plgn.plumber
       errorHandler: plgn.notify.onError "Jade error: <%= error.message %>"
     .pipe plgn.jade pretty: true
-    .pipe gulp.dest paths.public
+    .pipe gulp.dest "#{paths.public}/views/"
 
 compileStylus = (files) ->
   files
@@ -50,8 +51,16 @@ gulp.task 'jade', ['removePublic'], ->
 gulp.task 'stylus', ['removePublic'], ->
   compileStylus gulp.src paths.stylus
 
+# Inject dependencies in index.jade
+gulp.task 'index', ['coffee', 'jade', 'stylus'], ->
+  sources = gulp.src ["#{paths.public}/js/*.js", "#{paths.public}/css/*.css"], read: false
+  gulp.src paths.index
+    .pipe plgn.inject(sources, ignorePath: 'public')
+    .pipe plgn.jade pretty: true
+    .pipe gulp.dest paths.public
+
 # Compile all .jade, .stylus, .coffee files
-gulp.task 'compile', ['removePublic', 'jade', 'stylus', 'coffee']
+gulp.task 'compile', ['index']
 
 ###
 # Web server

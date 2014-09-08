@@ -3,10 +3,13 @@ doctype html
 html
   head
     title Title
-    link(rel='stylesheet', href='css/main.css')
+    //- inject:css
+    //- endinject
   body(ng-app='app')
     div(ng-controller="hello as h")
       p(ng-click="h.data()") Hello
 
     script(src='bower_components/angular/angular.js')
-    script(src='js/app.js')
+
+    //- inject:js
+    //- endinject
