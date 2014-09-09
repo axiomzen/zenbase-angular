@@ -5,6 +5,7 @@ paths =
   coffee: 'src/coffee/**/*.coffee'
   jade: 'src/**/*.jade'
   stylus: 'src/styles/**/*.styl'
+  stylusMain: 'src/styles/main.styl'
   public: './public'
 
 ###
@@ -31,7 +32,7 @@ gulp.task 'jade', ['removeHTML'], ->
 
 # Get and compile all .styl files in src/styles/ folder
 gulp.task 'stylus', ['removeCSS'], ->
-  gulp.src paths.stylus
+  gulp.src paths.stylusMain
     .pipe plgn.plumber
       errorHandler: plgn.notify.onError "Stylus error: <%= error.message %>"
     .pipe plgn.stylus()
@@ -62,9 +63,9 @@ gulp.task 'compile', ['removePublic', 'jade', 'coffee', 'stylus']
 
 # Watch changes on .jade, .stylus and .coffee files
 gulp.task 'watch', ['compile'], ->
-  plgn.watch paths.jade, (files, cb) -> gulp.start 'jade', cb
-  plgn.watch paths.stylus, (files, cb) -> gulp.start 'stylus', cb
-  plgn.watch paths.coffee, (files, cb) -> gulp.start 'coffee', cb
+  gulp.watch paths.jade, ['jade']
+  gulp.watch paths.stylus, ['stylus']
+  gulp.watch paths.coffee, ['coffee']
 
 # Starts a local web server
 gulp.task 'webserver', ['compile'], ->

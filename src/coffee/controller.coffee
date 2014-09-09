@@ -2,4 +2,4 @@ angular.module 'app'
   .controller 'hello', ->
     @data = ->
       console.log 'clicked'
-      alert 'hello world'
+      alert 'hello world!'
