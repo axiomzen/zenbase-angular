@@ -4,9 +4,12 @@ html
   head
     title Title
     link(rel='stylesheet', href='/css/main.css')
+    // bower:css
+    // endbower
   body(ng-app='app')
     div(ng-controller="hello as h")
       p(ng-click="h.data()") Hello
 
-    script(src='bower_components/angular/angular.js')
+    // bower:js
+    // endbower
     script(src='/js/app.js')

@@ -1,5 +1,6 @@
 gulp = require 'gulp'
 plgn = require('gulp-load-plugins')()
+wiredep = require('wiredep').stream
 
 paths =
   coffee: 'src/coffee/**/*.coffee'
@@ -29,6 +30,7 @@ gulp.task 'jade', ['removeHTML'], ->
   gulp.src paths.jade
     .pipe plgn.plumber
       errorHandler: plgn.notify.onError "Jade error: <%= error.message %>"
+    .pipe wiredep ignorePath: paths.public
     .pipe plgn.jade pretty: true
     .pipe gulp.dest "#{paths.public}"
 
