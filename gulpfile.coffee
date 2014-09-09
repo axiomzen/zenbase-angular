@@ -18,7 +18,9 @@ gulp.task 'coffee', ['removeJS'], ->
   gulp.src paths.coffee
     .pipe plgn.plumber
       errorHandler: plgn.notify.onError "Coffee error: <%= error.message %>"
+    .pipe plgn.sourcemaps.init()
     .pipe plgn.coffee()
+    .pipe plgn.sourcemaps.write()
     .pipe plgn.concat 'app.js'
     .pipe gulp.dest "#{paths.public}/js/"
 
