@@ -7,9 +7,7 @@ html
     // bower:css
     // endbower
   body(ng-app='app')
-    div(ng-controller="hello as h")
-      p(ng-click="h.data()") Hello
-
+    div(ui-view)
     // bower:js
     // endbower
     script(src='/js/app.js')
