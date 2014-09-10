@@ -6,3 +6,4 @@ module.exports =
   publicDir: './public'
   publicDirJS: './public/js/'
   publicDirCSS: './public/css/'
+  distDir: './dist'
