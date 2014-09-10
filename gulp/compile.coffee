@@ -17,16 +17,16 @@ gulp.task 'coffee', ['removeJS'], ->
     .pipe plgn.coffee()
     .pipe plgn.sourcemaps.write()
     .pipe plgn.concat 'app.js'
-    .pipe gulp.dest "#{paths.public}/js/"
+    .pipe gulp.dest paths.publicDirJS
 
 # Get and compile all .jade files in src/ folder
 gulp.task 'jade', ['removeHTML'], ->
   gulp.src paths.jade
     .pipe plgn.plumber
       errorHandler: plgn.notify.onError "Jade error: <%= error.message %>"
-    .pipe wiredep ignorePath: paths.public
+    .pipe wiredep ignorePath: paths.publicDir
     .pipe plgn.jade pretty: true
-    .pipe gulp.dest "#{paths.public}"
+    .pipe gulp.dest paths.publicDir
 
 # Get and compile all .styl files in src/styles/ folder
 gulp.task 'stylus', ['removeCSS'], ->
@@ -34,18 +34,18 @@ gulp.task 'stylus', ['removeCSS'], ->
     .pipe plgn.plumber
       errorHandler: plgn.notify.onError "Stylus error: <%= error.message %>"
     .pipe plgn.stylus()
-    .pipe gulp.dest "#{paths.public}/css/"
+    .pipe gulp.dest paths.publicDirCSS
 
 gulp.task 'removeJS', ->
-  gulp.src "#{paths.public}/js/"
+  gulp.src paths.publicDirJS
     .pipe plgn.rimraf()
 
 gulp.task 'removeHTML', ->
-  gulp.src ["#{paths.public}/index.html", "#{paths.public}/views/"]
+  gulp.src ["#{paths.publicDir}/index.html", "#{paths.publicDir}/views/"]
     .pipe plgn.rimraf()
 
 gulp.task 'removeCSS', ->
-  gulp.src "#{paths.public}/css/"
+  gulp.src paths.publicDirCSS
     .pipe plgn.rimraf()
 
 # Remove all compiled files from public folder (ignores bower_components)

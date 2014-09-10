@@ -3,4 +3,6 @@ module.exports =
   jade: 'src/**/*.jade'
   stylus: 'src/styles/**/*.styl'
   stylusMain: 'src/styles/main.styl'
-  public: './public'
+  publicDir: './public'
+  publicDirJS: './public/js/'
+  publicDirCSS: './public/css/'
