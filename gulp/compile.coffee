@@ -13,6 +13,8 @@ gulp.task 'coffee', ['removeJS'], ->
   gulp.src paths.coffee
     .pipe plgn.plumber
       errorHandler: plgn.notify.onError "Coffee error: <%= error.message %>"
+    .pipe plgn.coffeelint()
+    .pipe plgn.coffeelint.reporter()
     .pipe plgn.sourcemaps.init()
     .pipe plgn.coffee()
     .pipe plgn.sourcemaps.write()

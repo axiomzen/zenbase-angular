@@ -4,8 +4,8 @@ angular.module 'app', ['ui.router']
 
     $stateProvider
       .state 'home',
-        url: '/',
+        url: '/'
         templateUrl: '/views/main.html'
       .state 'partial',
-        url: '/partial',
+        url: '/partial'
         templateUrl: '/views/partial.html'
