@@ -6,6 +6,8 @@ angular.module 'app', ['ui.router']
       .state 'home',
         url: '/'
         templateUrl: '/views/main.html'
+        controller: 'mainController'
+        controllerAs: 'mainCtrl'
       .state 'partial',
         url: '/partial'
         templateUrl: '/views/partial.html'

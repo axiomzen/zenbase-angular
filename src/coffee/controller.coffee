@@ -1,5 +1,9 @@
 angular.module 'app'
-  .controller 'hello', ->
-    @data = ->
-      console.log 'clicked'
-      alert 'hello world!'
+  .controller 'mainController', ->
+    @stack = [
+      'gulp'
+      'angular'
+      'coffee'
+      'stylus'
+      'jade'
+    ]
