@@ -3,7 +3,6 @@ plgn = require('gulp-load-plugins')()
 mainBowerFiles = require 'main-bower-files'
 paths = require './paths'
 
-
 ###
 # Build Tasks
 # Builds from public/ into dist/ while minifying and such
@@ -41,6 +40,13 @@ gulp.task 'copyBower', ->
   gulp.src mainBowerFiles(), base: './public/bower_components/'
     .pipe gulp.dest "#{paths.distDir}/bower_components/"
 
+gulp.task 'images', ->
+  gulp.src paths.images
+    .pipe plgn.imagemin
+      progressive: true
+      optimizationLevel: 7
+    .pipe gulp.dest "#{paths.distDir}/images/"
+
 gulp.task 'serveDist', ->
   gulp.src paths.distDir
     .pipe plgn.webserver
@@ -49,4 +55,4 @@ gulp.task 'serveDist', ->
 gulp.task 'minAll', ['minJS', 'minHTML', 'minCSS']
 
 gulp.task 'build', ['removeDist'], ->
-  gulp.start 'minAll', 'copyBower'
+  gulp.start 'minAll', 'copyBower', 'images'
