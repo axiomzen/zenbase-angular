@@ -1,8 +1,12 @@
 angular.module 'app'
   .controller 'mainController', ->
-    @stack = [
+    tech: [
       'gulp'
       'angular'
+      'bootstrap'
+    ]
+
+    lang: [
       'coffee'
       'stylus'
       'jade'
