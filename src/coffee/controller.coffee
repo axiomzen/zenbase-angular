@@ -3,7 +3,7 @@ angular.module 'app'
     tech: [
       'gulp'
       'angular'
-      'bootstrap'
+      'bower'
     ]
 
     lang: [
