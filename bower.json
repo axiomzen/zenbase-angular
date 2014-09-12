@@ -1,5 +1,5 @@
 {
-  "name": "routific-full-product",
+  "name": "zenbase-angular",
   "private": true,
   "dependencies": {
     "angular": "1.3.0-rc.0",
