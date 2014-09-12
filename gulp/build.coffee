@@ -38,6 +38,7 @@ gulp.task 'removeDist', ->
 
 gulp.task 'copyBower', ->
   gulp.src mainBowerFiles(), base: './public/bower_components/'
+    .pipe plgn.uglify()
     .pipe gulp.dest "#{paths.distDir}/bower_components/"
 
 gulp.task 'images', ->
