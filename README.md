@@ -23,7 +23,8 @@ The gulp pipelines are contained in the `/gulp` folder. All your coding should b
 Clone the repo; install dependencies:
 
 ```
-npm i && bower i
+npm install
+bower install
 ```
 
 - `gulp` Compile your source into `/public` and start a local server
