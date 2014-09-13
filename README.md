@@ -8,12 +8,23 @@ Zenbase is designed with the developer's productivity in mind. We keep things li
 
 - Gulp
 - Angular
-- Bootstrap
+- Bower
 - Coffeescript
 - Stylus
 - Jade
 
+
+## Overview
+
+The gulp pipelines are contained in the `/gulp` folder. All your coding should be done in `/src`. Note as well that you should not need to edit `/src/index.jade` that much. All your Javascript and CSS is concatenated, and all bower dependencies are injected automatically. Wow.
+
 ## Usage
+
+Clone the repo; install dependencies:
+
+```
+npm i && bower i
+```
 
 - `gulp` Compile your source into `/public` and start a local server
 - `gulp build` Build your app into `/dist`
