@@ -1,3 +1,5 @@
+<a href="https://zenhub.io"><img src="https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png" height="18px"></a>
+
 ## Zenbase-angular
 
 Yet another Angular boilerplate. Why? Why not! Boilerplates come in many flavours. Zenbase is intended to be light and flexible, but with a few opinionated choices up-front.
