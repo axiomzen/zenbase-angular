@@ -45,7 +45,7 @@ gulp.task 'revision', ['minJS', 'minCSS', 'minHTML'], ->
     .pipe gulp.dest "#{paths.distDir}"
 
 gulp.task 'removeDist', ->
-  gulp.src paths.distDir
+  gulp.src paths.distDir, read: false
     .pipe plgn.rimraf()
 
 gulp.task 'removeRev', ->
