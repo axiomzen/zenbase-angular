@@ -12,7 +12,10 @@ gulp.task 'minJS', ['coffee'], ->
   gulp.src "#{paths.publicDirJS}/app.js"
     .pipe plgn.ngAnnotate()
     .pipe plgn.uglify()
+    .pipe plgn.rev()
     .pipe gulp.dest "#{paths.distDir}/js/"
+    .pipe plgn.rev.manifest()
+    .pipe gulp.dest "#{paths.revDir}/js"
 
 gulp.task 'minHTML', ['jade'], ->
   gulp.src "#{paths.publicDir}/**/*.html"
@@ -30,10 +33,23 @@ gulp.task 'minHTML', ['jade'], ->
 gulp.task 'minCSS', ['stylus'], ->
   gulp.src "#{paths.publicDirCSS}/main.css"
     .pipe plgn.minifyCss()
+    .pipe plgn.rev()
     .pipe gulp.dest "#{paths.distDir}/css/"
+    .pipe plgn.rev.manifest()
+    .pipe gulp.dest "#{paths.revDir}/css"
+
+gulp.task 'revision', ['minJS', 'minCSS', 'minHTML'], ->
+  gulp.src ["#{paths.revDir}/**/*.json",
+      "#{paths.distDir}/**/*.html"]
+    .pipe plgn.revCollector()
+    .pipe gulp.dest "#{paths.distDir}"
 
 gulp.task 'removeDist', ->
   gulp.src paths.distDir
+    .pipe plgn.rimraf()
+
+gulp.task 'removeRev', ->
+  gulp.src paths.revDir
     .pipe plgn.rimraf()
 
 gulp.task 'copyBower', ->
@@ -54,7 +70,7 @@ gulp.task 'serveDist', ->
     .pipe plgn.webserver
       open: true
 
-gulp.task 'minAll', ['minJS', 'minHTML', 'minCSS']
+gulp.task 'minAll', ['minJS', 'minHTML', 'minCSS', 'revision']
 
-gulp.task 'build', ['removeDist'], ->
+gulp.task 'build', ['removeDist', 'removeRev'], ->
   gulp.start 'minAll', 'copyBower', 'images'
