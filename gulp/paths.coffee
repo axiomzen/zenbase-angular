@@ -8,3 +8,4 @@ module.exports =
   publicDirCSS: './public/css/'
   images: './public/images/**/*'
   distDir: './dist'
+  revDir: './rev'
