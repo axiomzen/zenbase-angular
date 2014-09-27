@@ -9,3 +9,4 @@ module.exports =
   images: './public/images/**/*'
   distDir: './dist'
   revDir: './rev'
+  deploy: './dist/**/*'
