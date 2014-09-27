@@ -34,3 +34,4 @@ bower install
 - `gulp` Compile your source into `/public` and start a local server
 - `gulp build` Build your app into `/dist`
 - `gulp serveDist` Start a local server and serve up what you just built
+- `gulp deploy` Deploys dist/ folder to gh-pages (you have to build first!)
