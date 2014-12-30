@@ -17,8 +17,8 @@ gulp.task 'coffee', ['removeJS'], ->
     .pipe plgn.coffeelint.reporter()
     .pipe plgn.sourcemaps.init()
     .pipe plgn.coffee()
-    .pipe plgn.sourcemaps.write()
     .pipe plgn.concat 'app.js'
+    .pipe plgn.sourcemaps.write()
     .pipe gulp.dest paths.publicDirJS
 
 # Get and compile all .jade files in src/ folder
